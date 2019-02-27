@@ -53,7 +53,7 @@ public class boxCollider : MonoBehaviour {
     //Destroy List Reference
     void OnDestroy()
     {
-        //boxList.Remove(this);
+        boxList.Remove(this);
     }
 
     //Check For Collision 

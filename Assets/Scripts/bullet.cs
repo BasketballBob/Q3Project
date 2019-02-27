@@ -5,7 +5,7 @@ using UnityEngine;
 public class bullet : MonoBehaviour {
 
     //Bullet Variables 
-    float lifeAlarm = 5;
+    float lifeAlarm = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,7 @@ public class bullet : MonoBehaviour {
         //Destroy Bullet
         else
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
 	}
 }

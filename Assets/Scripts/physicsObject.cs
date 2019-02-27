@@ -9,9 +9,15 @@ public class physicsObject : MonoBehaviour {
     boxCollider bc;
 
     //Physics Object Variables
-    public static float minMove = .001f;
+    public static float minMove = .01f; //.001f
     public float hSpeed = 0;
     public float vSpeed = 0;
+    float prevX;
+    float prevY;
+
+    //Physics Object Toggleable Variables 
+    public bool destroyOnCollide = false;
+    public bool bounceOnCollide = false;
 
     //Define Reference Variables
     private void OnEnable()
@@ -24,10 +30,22 @@ public class physicsObject : MonoBehaviour {
     void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+    // Update is called once per frame
+    void Update() {
+
+
+        //Destroy After Movement (Destroys After Collision Is Shown)
+        if(destroyOnCollide)
+        { 
+            //(Check Previous Collision)
+            if (bc.placeMeeting(prevX, prevY + minMove * Sign(vSpeed), (int)ct.type.wall)
+            || bc.placeMeeting(prevX + minMove * Sign(hSpeed), prevY, (int)ct.type.wall))
+            {
+                Destroy(gameObject);
+            }
+        }
+
         //Vertical Movement
         if(vSpeed != 0)
         {
@@ -42,6 +60,16 @@ public class physicsObject : MonoBehaviour {
                     trans.position += new Vector3(0, minMove * Sign(vSpeed));
                 }
                 while (!bc.placeMeeting(trans.position.x, trans.position.y + minMove * Sign(vSpeed), (int)ct.type.wall));
+            }
+
+            //On Collision Modifications
+            if (bc.placeMeeting(trans.position.x, trans.position.y + minMove * Sign(vSpeed), (int)ct.type.wall))
+            {
+                //Bounce
+                if (bounceOnCollide)
+                {
+                    vSpeed *= -1;
+                }
             }
         }
 
@@ -63,8 +91,23 @@ public class physicsObject : MonoBehaviour {
                 }
                 while (!bc.placeMeeting(trans.position.x + minMove * Sign(hSpeed), trans.position.y, (int)ct.type.wall));
             }
+
+            //On Collision Modifications
+            if (bc.placeMeeting(trans.position.x + minMove * Sign(hSpeed), trans.position.y, (int)ct.type.wall))
+            {
+                //Bounce
+                if(bounceOnCollide)
+                {
+                    hSpeed *= -1;
+                }
+            }
         }
-	}
+
+        //Set Prev Position Variables
+        prevX = trans.position.x;
+        prevY = trans.position.y;
+
+    }
 
     public float Sign(float input)
     {
