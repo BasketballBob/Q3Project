@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\boxCollider.cs" />
     <Compile Include="Assets\Scripts\bullet.cs" />
     <Compile Include="Assets\Scripts\ct.cs" />
+    <Compile Include="Assets\Scripts\gameManager.cs" />
     <Compile Include="Assets\Scripts\physicsObject.cs" />
     <Compile Include="Assets\Scripts\player.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

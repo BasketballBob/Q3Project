@@ -13,6 +13,13 @@ public class player : MonoBehaviour {
     public GameObject bulletReference;
     GameObject gun;
 
+    //Global Player Variables
+    public static int gridPosX = 0;
+    public static int gridPosY = 0;
+    public static int prevGridPosX = 0;
+    public static int prevGridPosY = 0;
+    public static Vector2 spawnPos;
+
     //Player Variables
     float moveSpeed = 6f;
     float aimAngle = 0;
@@ -45,6 +52,12 @@ public class player : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
+
+        //Set Player To Spawn Position
+        if(spawnPos != null)
+        {
+            trans.position = spawnPos;
+        }
 
         //Create Player Gun
         gun = Instantiate(gunReference); 
@@ -138,6 +151,45 @@ public class player : MonoBehaviour {
             dashAlarm = dashTime;
         }
 
+        //Player Room Transition (Reference point is the center of the screen)
+        if(Mathf.Abs(0-trans.position.x) > gameManager.roomWidth/2 || Mathf.Abs(0 - trans.position.y) > gameManager.roomHeight/2)
+        {
+            //VERTICAL 
+            if (Mathf.Abs(0 - trans.position.y)/gameManager.roomHeight > Mathf.Abs(0 - trans.position.x)/gameManager.roomWidth)
+            {
+                //UP
+                if (trans.position.y > 0)
+                {
+                    gameManager.goToRoom(gridPosX, gridPosY - 1);
+                }
+                //DOWN 
+                else if (trans.position.y < 0)
+                {
+                    gameManager.goToRoom(gridPosX, gridPosY + 1);
+                }
+            }
+            //HORIZONTAL
+            else if(Mathf.Abs(0 - trans.position.y)/gameManager.roomHeight <= Mathf.Abs(0 - trans.position.x)/gameManager.roomWidth)
+            { 
+                //RIGHT 
+                if (trans.position.x > 0)
+                {
+                    gameManager.goToRoom(gridPosX + 1, gridPosY);
+                }
+                //LEFT
+                else if (trans.position.x < 0)
+                {
+                    gameManager.goToRoom(gridPosX - 1, gridPosY);
+                }
+            }
+            //Debug
+            else
+            {
+                Debug.Log("ERROR CHECK CODE AT THIS MESSAGE");
+            }
+
+        }
+
     }
 
     private void LateUpdate()
@@ -155,6 +207,9 @@ public class player : MonoBehaviour {
 
     private void OnGUI()
     {
+        //Draw Grid 
+        gameManager.drawGrid();
+
         //Test GUI
         int testWidth = 100;
         int testHeight = 20;
@@ -163,7 +218,7 @@ public class player : MonoBehaviour {
         //Draw Debug Labels
         float labelWidth = 100;
         float labelHeight = 25;
-        GUI.Label(new Rect(10, 10, labelWidth, labelHeight), aimV.ToString());
-        GUI.Label(new Rect(10, 50, labelWidth, labelHeight), aimH.ToString());        
+        GUI.Label(new Rect(10, 10, labelWidth, labelHeight), gridPosX.ToString()); //aimV.ToString());
+        GUI.Label(new Rect(10, 50, labelWidth, labelHeight), gridPosY.ToString()); //aimH.ToString());        
     }
 }
