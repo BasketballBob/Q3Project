@@ -8,6 +8,7 @@ public class player : MonoBehaviour {
     Transform trans;
     physicsObject po;
     boxCollider bc;
+    cloudConnect cc;
 
     public GameObject gunReference;
     public GameObject bulletReference;
@@ -34,6 +35,9 @@ public class player : MonoBehaviour {
     float dashDelayAlarm = 0;
     float dashDelayTime = 2f;
 
+    //Connection Variables 
+    float refreshAlarm = 0;
+    float refreshTime = 2f;
 
     //Input Variables
     float vAxis = 0; // Input.GetAxis("VerticalJoy"); 
@@ -49,6 +53,10 @@ public class player : MonoBehaviour {
         trans = GetComponent<Transform>();
         po = GetComponent<physicsObject>();
         bc = GetComponent<boxCollider>();
+        cc = gameObject.AddComponent<cloudConnect>();
+        cc.Start();
+        cc.webData.x1 = 1000;
+        cc.PushRow(0);
     }
     // Use this for initialization
     void Start () {
@@ -58,6 +66,9 @@ public class player : MonoBehaviour {
         {
             trans.position = spawnPos;
         }
+
+        //Color Current Player Square 
+        gameManager.gridArray[gridPosX, gridPosY] = 1;
 
         //Create Player Gun
         gun = Instantiate(gunReference); 
@@ -188,6 +199,23 @@ public class player : MonoBehaviour {
                 Debug.Log("ERROR CHECK CODE AT THIS MESSAGE");
             }
 
+        }
+
+        //////////////////////////////////////////
+        // MANAGE ONLINE INTERNET FUNCTIONALITY //
+        //////////////////////////////////////////
+
+        //Manage Refresh Alarm
+        if (refreshAlarm - Time.deltaTime > 0)
+        {
+            refreshAlarm -= Time.deltaTime;
+        }
+        //Refresh Connection Variables
+        else
+        {
+
+            //Reset Refresh Alarm
+            refreshAlarm = refreshTime;
         }
 
     }

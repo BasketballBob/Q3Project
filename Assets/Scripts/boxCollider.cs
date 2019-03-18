@@ -39,8 +39,8 @@ public class boxCollider : MonoBehaviour {
             width = sr.bounds.size.x;// * trans.localScale.x;
 
             //sr.bounds
-            Debug.Log(height);
-            Debug.Log(width);
+            //Debug.Log(height);
+            //Debug.Log(width);
             //Debug.Log(sr.bounds.size.x);
         }
     }

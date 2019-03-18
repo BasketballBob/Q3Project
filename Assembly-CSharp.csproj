@@ -63,10 +63,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\boxCollider.cs" />
     <Compile Include="Assets\Scripts\bullet.cs" />
+    <Compile Include="Assets\Scripts\cloudConnect.cs" />
+    <Compile Include="Assets\Scripts\cloudData.cs" />
     <Compile Include="Assets\Scripts\ct.cs" />
     <Compile Include="Assets\Scripts\gameManager.cs" />
     <Compile Include="Assets\Scripts\physicsObject.cs" />
     <Compile Include="Assets\Scripts\player.cs" />
+    <Compile Include="Assets\Scripts\Unused\cloudManager.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/VGD/Q3Test/Q3Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

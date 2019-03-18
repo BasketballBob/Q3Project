@@ -10,12 +10,17 @@ public class gameManager : MonoBehaviour
     public static float roomHeight = 10;
 
     //Grid Variables
-    public static int gridWidth = 10;
-    public static int gridHeight = 10;
+    public const int gridWidth = 10;
+    public const int gridHeight = 10;
+    public static int[,] gridArray = new int[gridWidth, gridHeight];
     public static Vector2 gridPos = new Vector2(10, 10);
     public static float gridDimensions = 10; //Dimensions For Grid Squares
     public static float gridBevel = 10;
     public static int[,] gameGrid = new int[10, 10];
+    public static Color defaultSquare = new Color(.8f, .8f, .8f);
+    public static Color team1Square = new Color(.8f, .8f, .8f);
+    public static Color team2Square = new Color(.8f, .8f, .8f);
+    public const int colorCount = 3;
 
     //Rectangle Drawing Variables
     public static Color prevColor;
@@ -93,24 +98,38 @@ public class gameManager : MonoBehaviour
     }
 
     public static void drawGrid() //(Use In OnGUI)
-    { 
-        for (int x = 0;x < gridWidth;x++)
+    {
+        //Draw All Colored Squares (Draw One Set Of Colors At A Time)
+        for (int i = 0; i < colorCount-1;)
         {
-            for(int y = 0;y < gridHeight;y++)
+            //Determine Draw Color 
+            Color drawColor = new Color(0f, 0f, 0f);
+            if (i == 0) drawColor = defaultSquare;
+            else if (i == 1) drawColor = team1Square;
+            else if (i == 2) drawColor = team2Square;
+
+            //Check All Grid Vals
+            for (int x = 0; x < gridWidth; x++)
             {
-                //Determine Draw Color
-                Color drawColor = new Color(.5f, .5f, .5f);
-
-                //Set Draw Opacity
-                if (x == player.gridPosX && y == player.gridPosY)
+                for (int y = 0; y < gridHeight; y++)
                 {
-                    drawColor = new Color(drawColor.r, drawColor.g, drawColor.b, 1f);
-                }
-                else drawColor = new Color(drawColor.r, drawColor.g, drawColor.b, .5f);
+                    //Determine Draw Color
+                    //Color drawColor = new Color(.5f, .5f, .5f);
 
-                //Draw RectangleS
-                drawRect(new Rect(gridPos.x + gridBevel*x + gridDimensions*(x), gridPos.y + gridBevel*y + gridDimensions*(y), gridDimensions, gridDimensions), drawColor);
+                    //Only Draw Square  
+                    if()
+
+                        //Set Draw Opacity
+                        if (x == player.gridPosX && y == player.gridPosY)
+                        {
+                            drawColor = new Color(drawColor.r, drawColor.g, drawColor.b, 1f);
+                        }
+                        else drawColor = new Color(drawColor.r, drawColor.g, drawColor.b, .25f);
+
+                        //Draw Rectangle
+                        drawRect(new Rect(gridPos.x + gridBevel * x + gridDimensions * (x), gridPos.y + gridBevel * y + gridDimensions * (y), gridDimensions, gridDimensions), drawColor);
+                }
             }
-        }        
+        }
     }
 }

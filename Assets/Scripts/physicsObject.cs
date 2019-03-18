@@ -87,7 +87,7 @@ public class physicsObject : MonoBehaviour {
                 {
                     trans.position += new Vector3(minMove * Sign(hSpeed), 0);
                     hcount += 1;
-                    Debug.Log(hcount);
+                    //Debug.Log(hcount);
                 }
                 while (!bc.placeMeeting(trans.position.x + minMove * Sign(hSpeed), trans.position.y, (int)ct.type.wall));
             }
